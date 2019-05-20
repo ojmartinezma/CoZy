@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">CoZy</string>
+    <string name="title_activity_main">Menu Principal</string>
+    <string name="main_sensor_title">Sensores</string>
+    <string name="main_monitoreo_title">Monitoreo</string>
+    <string name="main_informes_title">Informes</string>
+    <string name="main_exportar_title">Exportar</string>
+    <string name="sensores_sensor1_name">Sensor 1</string>
+    <string name="sensores_sensor2_name">Sensor 2</string>
+    <string name="sensores_sensor3_name">Sensor 3</string>
+    <string name="sensores_sensor4_name">Sensor 4</string>
+    <string name="monitoreo_co2_name">Nivel de CO2 actual</string>
+    <string name="monitoreo_sensor_name">Salón 123</string>
+    <string name="monitoreo_co2_medida">855 ppm</string>
+    <string name="monitoreo_grafica_name">Comportamiento de la última hora</string>
+</resources>
