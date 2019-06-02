@@ -16,25 +16,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void sensores(View view){
+    public void sensors(View view){
         //
         Intent intent = new Intent(this, ListaSensoresActivity.class);
         startActivity(intent);
     }
 
-    public void monitoreo(View view){
+    public void monitored(View view){
         //
         Intent intent = new Intent(this, MonitoreoActivity.class);
         startActivity(intent);
     }
 
-    public void informes(View view){
+    public void informs(View view){
         //
         Intent intent = new Intent(this, ListaSensoresActivity.class);
         startActivity(intent);
     }
 
-    public void exportar(View view){
+    public void export(View view){
         //
         Intent intent = new Intent(this, ListaSensoresActivity.class);
         startActivity(intent);
