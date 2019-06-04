@@ -17,4 +17,5 @@
     <string name="main_accion_monitoreo">monitored</string>
     <string name="main_accion_informes">informs</string>
     <string name="main_accion_exportar">export</string>
+    <string name="sensores_accion_sensor1">sensor1</string>
 </resources>

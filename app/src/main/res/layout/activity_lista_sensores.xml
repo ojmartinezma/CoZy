@@ -60,6 +60,7 @@
             android:id="@+id/button5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="sensor1"
             android:text="@string/sensores_sensor1_name" />
 
         <Button
