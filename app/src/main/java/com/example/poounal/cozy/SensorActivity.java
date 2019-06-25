@@ -25,9 +25,10 @@ public class SensorActivity extends AppCompatActivity {
         //Instancia a la base de datos
         FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         //apuntamos al nodo que queremos leer
-        DatabaseReference myRef = fdb.getReference("sensores");
+        DatabaseReference myRef = fdb.getReference("/sensores/1");
 
         final TextView textview = (TextView)findViewById(R.id.textView3);
+        final TextView nombreSensor = (TextView)findViewById(R.id.textView4);
 
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -46,9 +47,13 @@ public class SensorActivity extends AppCompatActivity {
                 resultado += "\n\n-----------------------------\n\n";
                 resultado += "Como JSON:\n\n";
                 resultado += dataSnapshot.getValue().toString();
+                resultado += sensor1.getNombre();
+                resultado += sensor1.getUltima_medida();
+                resultado += sensor1.getUltimo_timestamp();
 
                 //mostramos en el textview
                 textview.setText(resultado);
+                nombreSensor.setText(sensor1.getNombre());
             }
 
             @Override

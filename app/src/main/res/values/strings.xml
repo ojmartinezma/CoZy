@@ -11,7 +11,7 @@
     <string name="sensores_sensor4_name">Sensor 4</string>
     <string name="monitoreo_co2_name">Nivel de CO2 actual</string>
     <string name="monitoreo_sensor_name">Salón 123</string>
-    <string name="monitoreo_co2_medida">855 ppm</string>
+    <string name="monitoreo_co2_medida">Obteniendo última medida...</string>
     <string name="monitoreo_grafica_name">Comportamiento de la última hora</string>
     <string name="main_accion_sensores">sensors</string>
     <string name="main_accion_monitoreo">monitored</string>
