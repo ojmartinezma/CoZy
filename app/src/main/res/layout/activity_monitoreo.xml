@@ -67,6 +67,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/monitoreo_co2_medida"
+                android:textSize="30sp"
+                android:typeface="normal"
                 tools:layout_editor_absoluteX="156dp"
                 tools:layout_editor_absoluteY="154dp" />
 
