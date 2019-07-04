@@ -19,4 +19,9 @@
     <string name="main_accion_exportar">export</string>
     <string name="sensores_accion_sensor1">sensor1</string>
     <string name="title_activity_informe">informeActivity</string>
+    <string name="sensor_id">Id del sensor</string>
+    <string name="sensor_name">Nombre del sensor</string>
+    <string name="sensor_status">Sensor habilitado/deshabilitado</string>
+    <string name="sensor_save">Guardar información</string>
+    <string name="sensor_accion_guardar">guardarSensor</string>
 </resources>

@@ -2,6 +2,9 @@ package com.example.poounal.cozy;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,18 +20,30 @@ import com.example.poounal.cozy.Sensor;
 
 public class SensorActivity extends AppCompatActivity {
 
+    private FirebaseDatabase fdb;
+    private DatabaseReference myRef;
+    private EditText idSensor1;
+    private EditText nombreSensor1;
+    private Switch estadoSensor1;
+    private Sensor sensor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor);
 
         //Instancia a la base de datos
-        FirebaseDatabase fdb = FirebaseDatabase.getInstance();
+        fdb = FirebaseDatabase.getInstance();
         //apuntamos al nodo que queremos leer
-        DatabaseReference myRef = fdb.getReference("/sensores/1");
+        myRef = fdb.getReference("/sensores/1");
 
-        final TextView textview = (TextView)findViewById(R.id.textView3);
-        final TextView nombreSensor = (TextView)findViewById(R.id.textView4);
+        final EditText idSensor = (EditText) findViewById(R.id.editText);
+        final EditText nombreSensor = (EditText) findViewById(R.id.editText2);
+        final Switch estadoSensor = (Switch) findViewById(R.id.switch1);
+
+        idSensor1=idSensor;
+        nombreSensor1=idSensor;
+        estadoSensor1=estadoSensor;
 
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -36,24 +51,17 @@ public class SensorActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                //leeremos un objeto de tipo Estudiante
+                //leeremos un objeto de tipo Sensor
                 GenericTypeIndicator<Sensor> t = new GenericTypeIndicator<Sensor>() {
                 };
                 Sensor sensor1 = dataSnapshot.getValue(t);
 
-                String resultado = "";
+                sensor = sensor1;
 
-                //Tambien podemos leer los datos como un string
-                resultado += "\n\n-----------------------------\n\n";
-                resultado += "Como JSON:\n\n";
-                resultado += dataSnapshot.getValue().toString();
-                resultado += sensor1.getNombre();
-                resultado += sensor1.getUltima_medida();
-                resultado += sensor1.getUltimo_timestamp();
-
-                //mostramos en el textview
-                textview.setText(resultado);
+                idSensor.setText("1");
+                idSensor.setEnabled(false);
                 nombreSensor.setText(sensor1.getNombre());
+                estadoSensor.setChecked(sensor1.isActivo());
             }
 
             @Override
@@ -62,6 +70,19 @@ public class SensorActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "ERROR FIREBASE"+error.getMessage(), Toast.LENGTH_SHORT);
                 toast1.show();
             }
+
         });
+
+    }
+
+    public void guardarSensor(View view){
+        sensor.setNombre(nombreSensor1.getText().toString());
+//        myRef.child("nombre").setValue(nombreSensor1.getText());
+//        myRef.child("activo").setValue(estadoSensor1.isChecked());
+        Toast toast1 =
+                Toast.makeText(getApplicationContext(),
+                        "Datos guardados", Toast.LENGTH_SHORT);
+
+        toast1.show();
     }
 }

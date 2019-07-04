@@ -1,6 +1,7 @@
 package com.example.poounal.cozy;
 
 public class Sensor {
+    private int id;
     private String nombre;
     private boolean activo;
     private float ultima_medida;

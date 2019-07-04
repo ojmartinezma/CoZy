@@ -24,6 +24,7 @@ public class MonitoreoActivity extends AppCompatActivity {
 
     private GraphView grafica;
     private LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {});
+    private double graphLastXValue = 5d;
 
 
 
@@ -41,26 +42,25 @@ public class MonitoreoActivity extends AppCompatActivity {
         final TextView medidaSensor = (TextView)findViewById(R.id.textView17);
         final TextView timestampSensor = (TextView)findViewById(R.id.textView5);
         final SimpleDateFormat horaFormato = new SimpleDateFormat("HH:mm:ss");
+        final TextView nombreSensor = (TextView)findViewById(R.id.textView16);
         grafica = (GraphView)findViewById(R.id.grafica_monitoreo);
+        grafica.getViewport().setXAxisBoundsManual(true);
+        grafica.getViewport().setMinX(0);
+        grafica.getViewport().setMaxX(4);
 
+        grafica.getGridLabelRenderer().setLabelVerticalWidth(100);
 
-
-//        grafica.getViewport().setXAxisBoundsManual(true);
+        // first mSeries is a line
+        series = new LineGraphSeries<>();
+        series.setDrawDataPoints(true);
+        series.setDrawBackground(true);
+        grafica.getGridLabelRenderer().setVerticalAxisTitle("ppm");
         grafica.getViewport().setMinY(0);
         grafica.getViewport().setMaxY(1000);
+        grafica.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+        grafica.getViewport().setYAxisBoundsManual(true);
+        grafica.addSeries(series);
 
-        grafica.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
-            @Override
-            public String formatLabel(double value, boolean isValueX) {
-                if(isValueX)
-                {
-                    return horaFormato.format(new Date((long)value));
-                }
-                return super.formatLabel(value, isValueX);
-            }
-        });
-
-        grafica.getGridLabelRenderer().setHorizontalLabelsAngle(90);
 
         myRef.addValueEventListener(new ValueEventListener() {
 
@@ -79,16 +79,13 @@ public class MonitoreoActivity extends AppCompatActivity {
                 medidaSensor.setText(ultimaMedida);
                 Date fecha = new java.util.Date(sensor1.getUltimo_timestamp()*1000);
                 timestampSensor.setText("Ultima medida tomada:\n"+fecha.toString());
+                nombreSensor.setText(sensor1.getNombre());
 
 
                 String horaString = horaFormato.format(fecha);
 
-                grafica.removeAllSeries();
-
-                series.appendData(new DataPoint(fecha.getTime(),sensor1.getUltima_medida()),true,10);
-
-                grafica.addSeries(series);
-
+                graphLastXValue += 0.25d;
+                series.appendData(new DataPoint(graphLastXValue, sensor1.getUltima_medida()), true, 22);
 
 
             }
@@ -99,6 +96,7 @@ public class MonitoreoActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "ERROR FIREBASE"+error.getMessage(), Toast.LENGTH_SHORT);
                 toast1.show();
             }
+
 
         });
 
