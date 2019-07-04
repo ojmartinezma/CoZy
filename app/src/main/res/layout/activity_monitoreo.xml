@@ -109,4 +109,14 @@
         </LinearLayout>
     </ScrollView>
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="370dp"
+        android:layout_height="47dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="23dp"
+        tools:layout_editor_absoluteY="633dp" />
+
 </android.support.constraint.ConstraintLayout>

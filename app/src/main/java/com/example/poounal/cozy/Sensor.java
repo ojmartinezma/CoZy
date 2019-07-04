@@ -3,9 +3,26 @@ package com.example.poounal.cozy;
 public class Sensor {
     private int id;
     private String nombre;
+    private int intervalo;
     private boolean activo;
     private float ultima_medida;
     private long ultimo_timestamp;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getIntervalo() {
+        return intervalo;
+    }
+
+    public void setIntervalo(int intervalo) {
+        this.intervalo = intervalo;
+    }
 
     public String getNombre() {
         return nombre;

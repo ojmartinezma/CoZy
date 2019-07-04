@@ -26,6 +26,7 @@ public class SensorActivity extends AppCompatActivity {
     private EditText nombreSensor1;
     private Switch estadoSensor1;
     private Sensor sensor;
+    private EditText intervalo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +41,12 @@ public class SensorActivity extends AppCompatActivity {
         final EditText idSensor = (EditText) findViewById(R.id.editText);
         final EditText nombreSensor = (EditText) findViewById(R.id.editText2);
         final Switch estadoSensor = (Switch) findViewById(R.id.switch1);
+        final EditText intervaloSensor = (EditText) findViewById(R.id.editText4);
 
         idSensor1=idSensor;
-        nombreSensor1=idSensor;
+        nombreSensor1=nombreSensor;
         estadoSensor1=estadoSensor;
+        intervalo=intervaloSensor;
 
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -62,6 +65,7 @@ public class SensorActivity extends AppCompatActivity {
                 idSensor.setEnabled(false);
                 nombreSensor.setText(sensor1.getNombre());
                 estadoSensor.setChecked(sensor1.isActivo());
+                intervaloSensor.setText((sensor1.getIntervalo()/1000)+"");
             }
 
             @Override
@@ -76,9 +80,9 @@ public class SensorActivity extends AppCompatActivity {
     }
 
     public void guardarSensor(View view){
-        sensor.setNombre(nombreSensor1.getText().toString());
-//        myRef.child("nombre").setValue(nombreSensor1.getText());
-//        myRef.child("activo").setValue(estadoSensor1.isChecked());
+        fdb.getReference().child("sensores").child("1").child("intervalo").setValue(Integer.valueOf(intervalo.getText().toString())*1000);
+        fdb.getReference().child("sensores").child("1").child("activo").setValue(estadoSensor1.isChecked());
+        fdb.getReference().child("sensores").child("1").child("nombre").setValue(nombreSensor1.getText().toString());
         Toast toast1 =
                 Toast.makeText(getApplicationContext(),
                         "Datos guardados", Toast.LENGTH_SHORT);

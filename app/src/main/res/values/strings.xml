@@ -24,4 +24,5 @@
     <string name="sensor_status">Sensor habilitado/deshabilitado</string>
     <string name="sensor_save">Guardar información</string>
     <string name="sensor_accion_guardar">guardarSensor</string>
+    <string name="sensor_intervalo">Intervalo de captura de datos (segundos)</string>
 </resources>

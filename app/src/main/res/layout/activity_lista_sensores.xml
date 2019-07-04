@@ -59,22 +59,5 @@
             android:onClick="sensor1"
             android:text="@string/sensores_sensor1_name" />
 
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sensores_sensor2_name" />
-
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sensores_sensor3_name" />
-
-        <Button
-            android:id="@+id/button8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sensores_sensor4_name" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

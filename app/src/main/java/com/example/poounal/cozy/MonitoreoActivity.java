@@ -1,7 +1,11 @@
 package com.example.poounal.cozy;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.TimeZone;
+import android.os.Vibrator;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -25,6 +29,7 @@ public class MonitoreoActivity extends AppCompatActivity {
     private GraphView grafica;
     private LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {});
     private double graphLastXValue = 5d;
+    private int color;
 
 
 
@@ -43,6 +48,7 @@ public class MonitoreoActivity extends AppCompatActivity {
         final TextView timestampSensor = (TextView)findViewById(R.id.textView5);
         final SimpleDateFormat horaFormato = new SimpleDateFormat("HH:mm:ss");
         final TextView nombreSensor = (TextView)findViewById(R.id.textView16);
+        final TextView consejo =(TextView)findViewById(R.id.textView3);
         grafica = (GraphView)findViewById(R.id.grafica_monitoreo);
         grafica.getViewport().setXAxisBoundsManual(true);
         grafica.getViewport().setMinX(0);
@@ -58,8 +64,10 @@ public class MonitoreoActivity extends AppCompatActivity {
         grafica.getViewport().setMinY(0);
         grafica.getViewport().setMaxY(1000);
         grafica.getGridLabelRenderer().setHorizontalLabelsVisible(false);
-        grafica.getViewport().setYAxisBoundsManual(true);
+        //grafica.getViewport().setYAxisBoundsManual(true);
         grafica.addSeries(series);
+
+        color = medidaSensor.getCurrentTextColor();
 
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -79,10 +87,27 @@ public class MonitoreoActivity extends AppCompatActivity {
                 medidaSensor.setText(ultimaMedida);
                 Date fecha = new java.util.Date(sensor1.getUltimo_timestamp()*1000);
                 timestampSensor.setText("Ultima medida tomada:\n"+fecha.toString());
-                nombreSensor.setText(sensor1.getNombre());
+                if(sensor1.isActivo()) {
+                    nombreSensor.setText(sensor1.getNombre());
+                    nombreSensor.setTextColor(color);
+                } else {
+                    nombreSensor.setText(sensor1.getNombre()+" (Sensor deshabilitado)");
+                    nombreSensor.setTextColor(Color.RED);
+                }
 
-
-                String horaString = horaFormato.format(fecha);
+                if (sensor1.getUltima_medida()>=1000){
+                    medidaSensor.setTextColor(Color.RED);
+                    consejo.setText("PPM muy alto, ventile el área");
+                } else if (sensor1.getUltima_medida()>=800){
+                    medidaSensor.setTextColor(Color.rgb(255,165,0));
+                    consejo.setText("PPM elevado");
+                } else if (sensor1.getUltima_medida()>=500){
+                    medidaSensor.setTextColor(Color.DKGRAY);
+                    consejo.setText("");
+                } else {
+                    medidaSensor.setTextColor(color);
+                    consejo.setText("");
+                }
 
                 graphLastXValue += 0.25d;
                 series.appendData(new DataPoint(graphLastXValue, sensor1.getUltima_medida()), true, 22);

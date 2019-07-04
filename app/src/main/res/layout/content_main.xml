@@ -51,19 +51,6 @@
             android:onClick="@string/main_accion_monitoreo"
             android:text="@string/main_monitoreo_title" />
 
-        <Button
-            android:id="@+id/boton_informes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@string/main_accion_informes"
-            android:text="@string/main_informes_title" />
-
-        <Button
-            android:id="@+id/boton_exportar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@string/main_accion_exportar"
-            android:text="@string/main_exportar_title" />
     </LinearLayout>
 
     <ImageView
