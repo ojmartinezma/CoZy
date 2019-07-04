@@ -13,15 +13,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.Date;
 
 public class MonitoreoActivity extends AppCompatActivity {
 
-    GraphView grafica;
+    private GraphView grafica;
+    private LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {});
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,27 @@ public class MonitoreoActivity extends AppCompatActivity {
         final TextView ubicacionSensor = (TextView)findViewById(R.id.textView16);
         final TextView medidaSensor = (TextView)findViewById(R.id.textView17);
         final TextView timestampSensor = (TextView)findViewById(R.id.textView5);
+        final SimpleDateFormat horaFormato = new SimpleDateFormat("HH:mm:ss");
         grafica = (GraphView)findViewById(R.id.grafica_monitoreo);
+
+
+
+//        grafica.getViewport().setXAxisBoundsManual(true);
+        grafica.getViewport().setMinY(0);
+        grafica.getViewport().setMaxY(1000);
+
+        grafica.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if(isValueX)
+                {
+                    return horaFormato.format(new Date((long)value));
+                }
+                return super.formatLabel(value, isValueX);
+            }
+        });
+
+        grafica.getGridLabelRenderer().setHorizontalLabelsAngle(90);
 
         myRef.addValueEventListener(new ValueEventListener() {
 
@@ -56,16 +80,16 @@ public class MonitoreoActivity extends AppCompatActivity {
                 Date fecha = new java.util.Date(sensor1.getUltimo_timestamp()*1000);
                 timestampSensor.setText("Ultima medida tomada:\n"+fecha.toString());
 
-                BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
-                        new DataPoint(1,1),
-                        new DataPoint(2,2),
-                        new DataPoint(3,3),
-                        new DataPoint(4,4),
-                        new DataPoint(5,5),
-                        new DataPoint(6,6),
-                });
+
+                String horaString = horaFormato.format(fecha);
+
+                grafica.removeAllSeries();
+
+                series.appendData(new DataPoint(fecha.getTime(),sensor1.getUltima_medida()),true,10);
 
                 grafica.addSeries(series);
+
+
 
             }
 
