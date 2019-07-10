@@ -10,9 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".informeActivity"
-            android:label="@string/title_activity_informe"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".InformeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation"
@@ -36,5 +37,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
     </application>
+
+    <uses-permission android:name="android.permission.VIBRATE" />
 
 </manifest>

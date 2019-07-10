@@ -3,11 +3,12 @@ package com.example.poounal.cozy;
 import android.content.Context;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
-import android.icu.util.TimeZone;
+import android.os.Build;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -49,7 +49,7 @@ public class MonitoreoActivity extends AppCompatActivity {
         final SimpleDateFormat horaFormato = new SimpleDateFormat("HH:mm:ss");
         final TextView nombreSensor = (TextView)findViewById(R.id.textView16);
         final TextView consejo =(TextView)findViewById(R.id.textView3);
-        grafica = (GraphView)findViewById(R.id.grafica_monitoreo);
+        grafica = (GraphView)findViewById(R.id.grafica);
         grafica.getViewport().setXAxisBoundsManual(true);
         grafica.getViewport().setMinX(0);
         grafica.getViewport().setMaxX(4);
@@ -62,7 +62,7 @@ public class MonitoreoActivity extends AppCompatActivity {
         series.setDrawBackground(true);
         grafica.getGridLabelRenderer().setVerticalAxisTitle("ppm");
         grafica.getViewport().setMinY(0);
-        grafica.getViewport().setMaxY(1000);
+        grafica.getViewport().setMaxY(1500);
         grafica.getGridLabelRenderer().setHorizontalLabelsVisible(false);
         //grafica.getViewport().setYAxisBoundsManual(true);
         grafica.addSeries(series);
@@ -98,15 +98,25 @@ public class MonitoreoActivity extends AppCompatActivity {
                 if (sensor1.getUltima_medida()>=1000){
                     medidaSensor.setTextColor(Color.RED);
                     consejo.setText("PPM muy alto, ventile el área");
+                    consejo.setVisibility(View.VISIBLE);
+                    consejo.setBackgroundColor(Color.RED);
+                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    if(Build.VERSION.SDK_INT>=26){
+                        ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(1000,-1));
+                    } else {
+                        ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(1000);
+                    }
                 } else if (sensor1.getUltima_medida()>=800){
                     medidaSensor.setTextColor(Color.rgb(255,165,0));
                     consejo.setText("PPM elevado");
                 } else if (sensor1.getUltima_medida()>=500){
                     medidaSensor.setTextColor(Color.DKGRAY);
                     consejo.setText("");
+                    consejo.setBackgroundColor(Color.YELLOW);
                 } else {
                     medidaSensor.setTextColor(color);
                     consejo.setText("");
+                    consejo.setBackgroundColor(Color.GREEN);
                 }
 
                 graphLastXValue += 0.25d;
